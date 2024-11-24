@@ -86,7 +86,7 @@ const mainpage = () => {
           direction="column"
           alignItems="center"
           justifyContent="center"
-          sx={{ minHeight: "100vh" }}
+          sx={{ minHeight: "80vh" }}
         >
           <Grid container item spacing={2}>
             <Grid size={8}>
