@@ -90,7 +90,7 @@ const mainpage = () => {
           <Grid item xs={3}>
             <Stack spacing={2} direction="row">
               <input
-                accept=".xls,xlsx"
+                accept=".xls,xlsx,.csv"
                 style={{ display: "none" }}
                 id="raised-button-file"
                 multiple
