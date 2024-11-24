@@ -4,16 +4,16 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid2";
-import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import Papa from "papaparse";
+// import Papa from "papaparse";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CsvDownloader from "react-csv-downloader";
 import "./mainpage.css";
-var XLSX = require("xlsx");
+import * as XLSX from "xlsx";
+import TextField from "@mui/material/TextField";
 
 const mainpage = () => {
-  let InitialState = null;
+  // let InitialState = null;
 
   const columns = [
     {
@@ -29,7 +29,8 @@ const mainpage = () => {
   const datas = [
     {
       first: "already-paid",
-      second: "buyer-company-name, buyer-requested-cancel-reason, INR, Easy Ship",
+      second:
+        "buyer-company-name, buyer-requested-cancel-reason, INR, Easy Ship",
     },
     {
       first: "foobar",
@@ -59,7 +60,7 @@ const mainpage = () => {
     };
     fileReader.readAsArrayBuffer(event.target.files[0]);
   };
-  
+
   const downloadHandler = () => {
     // const CSVString = Papa.unparse(InitialState, { newline: "\n" });
     console.log("hello");
@@ -87,8 +88,17 @@ const mainpage = () => {
           justifyContent="center"
           sx={{ minHeight: "100vh" }}
         >
-          <Grid item xs={3}>
-            <Stack spacing={2} direction="row">
+          <Grid container item spacing={2}>
+            <Grid size={8}>
+              <TextField
+                id="outlined-basic"
+                label="Invoice number"
+                variant="outlined"
+                size="small"
+              />
+            </Grid>
+            <Grid size={4}></Grid>
+            <Grid size={4}>
               <input
                 accept=".xls,xlsx,.csv"
                 style={{ display: "none" }}
@@ -106,19 +116,21 @@ const mainpage = () => {
                   Upload
                 </Button>
               </label>
-              <div onClick={() => downloadHandler()}> 
-              <CsvDownloader
-                filename="myfile"
-                extension=".csv"
-                separator=";"
-                wrapColumnChar=""
-                columns={columns}
-                datas={datas}
-                text="DOWNLOAD"
-                className="MuiButton"
-              />
-              </div>;
-              </Stack>
+            </Grid>
+            <Grid size={8}>
+              <div onClick={() => downloadHandler()}>
+                <CsvDownloader
+                  filename="myfile"
+                  extension=".csv"
+                  separator=";"
+                  wrapColumnChar=""
+                  columns={columns}
+                  datas={datas}
+                  text="DOWNLOAD"
+                  className="MuiButton"
+                />
+              </div>
+            </Grid>
           </Grid>
         </Grid>
       </Box>
