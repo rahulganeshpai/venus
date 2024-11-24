@@ -10,6 +10,7 @@ import Papa from "papaparse";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import CsvDownloader from "react-csv-downloader";
 import "./mainpage.css";
+var XLSX = require("xlsx");
 
 const mainpage = () => {
   let InitialState = null;
@@ -27,8 +28,8 @@ const mainpage = () => {
 
   const datas = [
     {
-      first: "foo",
-      second: "bar",
+      first: "already-paid",
+      second: "buyer-company-name, buyer-requested-cancel-reason, INR, Easy Ship",
     },
     {
       first: "foobar",
@@ -38,18 +39,30 @@ const mainpage = () => {
 
   const uploadHandler = (event) => {
     console.log(event.target.files[0]);
-    Papa.parse(event.target.files[0], {
-      header: true,
-      skipEmptyLines: true,
-      complete: function (results) {
-        console.log(results.data);
-        InitialState = results.data;
-      },
-    });
+    // Papa.parse(event.target.files[0], {
+    //   header: true,
+    //   skipEmptyLines: true,
+    //   complete: function (results) {
+    //     console.log(results.data);
+    //     InitialState = results.data;
+    //   },
+    // });
+    const fileReader = new FileReader();
+
+    fileReader.onload = function (e) {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      // const csvData = XLSX.utils.sheet_to_csv(worksheet);
+      const csvData = XLSX.utils.sheet_to_json(worksheet);
+      console.log(csvData);
+    };
+    fileReader.readAsArrayBuffer(event.target.files[0]);
   };
+  
   const downloadHandler = () => {
-    const CSVString = Papa.unparse(InitialState, { newline: "\n" });
-    console.log(CSVString);
+    // const CSVString = Papa.unparse(InitialState, { newline: "\n" });
+    console.log("hello");
   };
   return (
     <Fragment>
@@ -77,7 +90,7 @@ const mainpage = () => {
           <Grid item xs={3}>
             <Stack spacing={2} direction="row">
               <input
-                accept=".csv"
+                accept=".xls,xlsx"
                 style={{ display: "none" }}
                 id="raised-button-file"
                 multiple
@@ -93,16 +106,18 @@ const mainpage = () => {
                   Upload
                 </Button>
               </label>
+              <div onClick={() => downloadHandler()}> 
               <CsvDownloader
                 filename="myfile"
                 extension=".csv"
                 separator=";"
-                wrapColumnChar="'"
+                wrapColumnChar=""
                 columns={columns}
                 datas={datas}
                 text="DOWNLOAD"
                 className="MuiButton"
               />
+              </div>;
               </Stack>
           </Grid>
         </Grid>
