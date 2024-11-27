@@ -62,6 +62,29 @@ const mainpage = () => {
     fileReader.readAsArrayBuffer(event.target.files[0]);
   };
 
+  const uploadMasterData = (event) => {
+    console.log(event.target.files[0]);
+    // Papa.parse(event.target.files[0], {
+    //   header: true,
+    //   skipEmptyLines: true,
+    //   complete: function (results) {
+    //     console.log(results.data);
+    //     InitialState = results.data;
+    //   },
+    // });
+    const fileReader = new FileReader();
+
+    fileReader.onload = function (e) {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      // const csvData = XLSX.utils.sheet_to_csv(worksheet);
+      const csvData = XLSX.utils.sheet_to_json(worksheet);
+      console.log(csvData);
+    };
+    fileReader.readAsArrayBuffer(event.target.files[0]);
+  };
+
   const downloadHandler = () => {
     // const CSVString = Papa.unparse(InitialState, { newline: "\n" });
     console.log("hello");
@@ -89,7 +112,7 @@ const mainpage = () => {
           justifyContent="center"
           sx={{ minHeight: "40vh" }}
         >
-          <Grid container item spacing={2} style={{ "padding-left": "50px" }}>
+          <Grid container item spacing={2}>
             <TextField
               id="outlined-basic"
               label="Invoice number"
@@ -105,6 +128,25 @@ const mainpage = () => {
           </Grid>
           <Grid container item spacing={2} style={{ "padding-left": "50px" }}>
             <Stack direction="row" spacing={4}>
+
+            <input
+                accept=".xls,xlsx,.csv"
+                style={{ display: "none" }}
+                id="master-button-file"
+                multiple
+                type="file"
+                onChange={uploadMasterData}
+              />
+              <label htmlFor="master-button-file">
+                <Button
+                  variant="contained"
+                  component="span"
+                  startIcon={<CloudUploadIcon />}
+                >
+                  Upload Master Data
+                </Button>
+              </label>
+
               <input
                 accept=".xls,xlsx,.csv"
                 style={{ display: "none" }}
