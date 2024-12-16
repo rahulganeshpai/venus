@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Bar Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .app-bar {
+            background-color: #643B9F; /* App bar background color */
+            color: white;
+            display: flex;
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            padding: 30px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+        .app-bar .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            position: absolute; /* Position absolute for centering */
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .app-bar .nav {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            position: absolute; /* Position absolute for right alignment */
+            right: 20px;
+        }
+        .app-bar .nav li {
+            margin-left: 20px;
+        }
+        .app-bar .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+        }
+        .app-bar .nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 600px;
+            margin: 70px auto 0; /* Add top margin to avoid overlap with fixed app-bar */
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-bar">
+        <div class="logo">Venus Online</div>
+    </div> 
+</body>
+</html>
